@@ -6,11 +6,13 @@ import urllib
 import os.path
 import os
 import threading
-import pandas as pid
+import pandas as pd
+from random import randint
 import subprocess
 from urllib.request import urlretrieve
 import telegram
 import tweepy
+import re
 TOKEN = "686702879:AAFS1SlBKg3BVozmdgnVrmctK0-cwkBgykI"
 URL = "https://api.telegram.org/bot{}/".format(TOKEN)
 #print(dir(telegram))
@@ -49,7 +51,7 @@ class SubscriberBot():
                 path = bot.getFile(update['message']['document']['file_id'])
                 print(path['file_path'])
                 url = path['file_path']
-                urlretrieve(url,"/home/beknur/Desktop/bot/twitter/get_tweets/"+str(update['message']['document']['file_name']))
+                urlretrieve(url,os.path.abspath(str(update['message']['document']['file_name'])))
                 text = ""
             else:
                 continue
@@ -70,6 +72,11 @@ class SubscriberBot():
                             tick = old_message[str(name)]
             if text == "/start":
                 self.send_message("Hello {}! Please type '/' to see all available commands.".format(name), chat)
+            elif text == "/cancel":
+                old_message[str(name)] = [""]
+                with open("Old_message.json", 'w') as f:
+                    json.dump(old_message, f)
+                self.send_message("You cancelled action", chat)
             elif text == "/save_me" and list_keys != []:
                 self.send_message("Your username already saved\nType '/' if you are in trouble", chat)
             elif text == "/save_me" and list_keys == []:
@@ -103,8 +110,21 @@ class SubscriberBot():
                 self.send_message("Send your data in such format\n Ticker Company name signal in first message\n photo in another", chat)
             elif tick[0] == "/tweet":
                 print(text)
-                if text != '':
-                    tick.append(text)
+                if text != '' and len(tick)<2:
+                    temp_list = text.split()
+                    df = pd.read_csv('sample_tweets.csv', sep = ';')
+                    while(True):
+                        n = randint(0,53)
+                        if temp_list[2] in df['text'][n]:
+                            string = df['text'][n]
+                            for s in string.split():
+                                if '$' in s:
+                                    string = string.replace(s,'$'+temp_list[0])
+                                if '/' in s:
+                                    string = string.replace(s,'')
+                            string = string+'. '+temp_list[1]+' company'
+                            break
+                    tick.append(string)
                     old_message[str(name)] = tick
                     with open("Old_message.json", "w") as f:
                         json.dump(old_message,f)
@@ -121,15 +141,12 @@ class SubscriberBot():
                     image = os.path.abspath(str(update['message']['document']['file_name']))
                     status = api.update_with_media(image, status=tweet)
                     self.send_message("I have posted your tweet",chat)
+                    os.remove(str(update['message']['document']['file_name']))
                     old_message[str(name)] = [text]
                     with open("Old_message.json", "w") as f:
                         json.dump(old_message, f)
                 else:
                     self.send_message("Read carefully the above instructions",chat)
-            elif text == "/cancel":
-                old_message[str(name)] = []
-                with open("Old_message.json", 'w') as f:
-                    json.dump(old_message,f)
             else:
                 self.send_message("Type '/' to view commands", chat)
 
