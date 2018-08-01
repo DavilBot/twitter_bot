@@ -120,3 +120,63 @@ Traceback (most recent call last):
   File "/home/beknur/anaconda3/lib/python3.6/site-packages/requests/adapters.py", line 508, in send
     raise ConnectionError(e, request=request)
 requests.exceptions.ConnectionError: HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot686702879:AAFS1SlBKg3BVozmdgnVrmctK0-cwkBgykI/getUpdates?timeout=100&offset=787056022 (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f80735f7390>: Failed to establish a new connection: [Errno 101] Network is unreachable',))
+{'message_id': 462, 'from': {'id': 416552809, 'is_bot': False, 'first_name': 'Beknur', 'last_name': 'Kattabekov', 'username': 'Beknur_K', 'language_code': 'ru-ru'}, 'chat': {'id': 416552809, 'first_name': 'Beknur', 'last_name': 'Kattabekov', 'username': 'Beknur_K', 'type': 'private'}, 'date': 1533113236, 'text': '/start', 'entities': [{'offset': 0, 'length': 6, 'type': 'bot_command'}]}
+Traceback (most recent call last):
+  File "/home/beknur/anaconda3/lib/python3.6/site-packages/urllib3/connection.py", line 141, in _new_conn
+    (self.host, self.port), self.timeout, **extra_kw)
+  File "/home/beknur/anaconda3/lib/python3.6/site-packages/urllib3/util/connection.py", line 60, in create_connection
+    for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+  File "/home/beknur/anaconda3/lib/python3.6/socket.py", line 745, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno -3] Temporary failure in name resolution
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/beknur/anaconda3/lib/python3.6/site-packages/urllib3/connectionpool.py", line 601, in urlopen
+    chunked=chunked)
+  File "/home/beknur/anaconda3/lib/python3.6/site-packages/urllib3/connectionpool.py", line 346, in _make_request
+    self._validate_conn(conn)
+  File "/home/beknur/anaconda3/lib/python3.6/site-packages/urllib3/connectionpool.py", line 850, in _validate_conn
+    conn.connect()
+  File "/home/beknur/anaconda3/lib/python3.6/site-packages/urllib3/connection.py", line 284, in connect
+    conn = self._new_conn()
+  File "/home/beknur/anaconda3/lib/python3.6/site-packages/urllib3/connection.py", line 150, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+urllib3.exceptions.NewConnectionError: <urllib3.connection.VerifiedHTTPSConnection object at 0x7fe888003ac8>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/beknur/anaconda3/lib/python3.6/site-packages/requests/adapters.py", line 440, in send
+    timeout=timeout
+  File "/home/beknur/anaconda3/lib/python3.6/site-packages/urllib3/connectionpool.py", line 639, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/home/beknur/anaconda3/lib/python3.6/site-packages/urllib3/util/retry.py", line 388, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot686702879:AAFS1SlBKg3BVozmdgnVrmctK0-cwkBgykI/getUpdates?timeout=100&offset=787056029 (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7fe888003ac8>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution',))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "multiple_tweets.py", line 190, in <module>
+    obj.main()
+  File "multiple_tweets.py", line 180, in main
+    updates = self.get_updates(last_update_id)
+  File "multiple_tweets.py", line 34, in get_updates
+    js = self.get_json_from_url(url)
+  File "multiple_tweets.py", line 26, in get_json_from_url
+    content = self.get_url(url)
+  File "multiple_tweets.py", line 21, in get_url
+    response = requests.get(url)
+  File "/home/beknur/anaconda3/lib/python3.6/site-packages/requests/api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "/home/beknur/anaconda3/lib/python3.6/site-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/beknur/anaconda3/lib/python3.6/site-packages/requests/sessions.py", line 508, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/home/beknur/anaconda3/lib/python3.6/site-packages/requests/sessions.py", line 618, in send
+    r = adapter.send(request, **kwargs)
+  File "/home/beknur/anaconda3/lib/python3.6/site-packages/requests/adapters.py", line 508, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot686702879:AAFS1SlBKg3BVozmdgnVrmctK0-cwkBgykI/getUpdates?timeout=100&offset=787056029 (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7fe888003ac8>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution',))
