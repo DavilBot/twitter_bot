@@ -15,7 +15,6 @@ import tweepy
 import re
 TOKEN = "686702879:AAFS1SlBKg3BVozmdgnVrmctK0-cwkBgykI"
 URL = "https://api.telegram.org/bot{}/".format(TOKEN)
-#print(dir(telegram))
 bot = telegram.Bot(token = TOKEN)
 class SubscriberBot():
     def get_url(self, url):
@@ -173,12 +172,6 @@ class SubscriberBot():
         keyboard = items#[[item] for item in items]
         reply_markup = {"keyboard":keyboard, "one_time_keyboard": True}
         return json.dumps(reply_markup)
-
-    def threads_runner(self, func_names):
-        for f in func_names:
-            threads = threading.Thread(target=f, args=())
-            threads.daemon = True
-            threads.start()
 
     def main(self):
         last_update_id = None
