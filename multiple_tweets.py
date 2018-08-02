@@ -85,10 +85,11 @@ class SubscriberBot():
                     json.dump(old_message, fm)
                 with open('data.json', 'w') as fp:
                     json.dump(data, fp)
-                self.send_message("Please enter using space like this consumerkey consumersecret accesstoken accesstokensecret of your twitter account\nPlease be careful", chat)
+                self.send_message("Please enter using space like this consumerkey consumersecret accesstoken accesstokensecret of your twitter account\nPlease be careful\n"+
+                                  "if you don't know or don't have these keys use this link https://chimpgroup.com/knowledgebase/twitter-api-keys/", chat)
             elif tick[0] == "/save_me" and list_keys == []:
                 data[str(name)] = text.split()#list of data
-                if len(text.split())==4:
+                if len(text.split())==4 and len(data[str(name)][0])==25 and len(data[str(name)][1])==50 and len(data[str(name)][2])==50 and len(data[str(name)][3])==45:
                     with open('data.json', 'w') as fp:
                         json.dump(data, fp)
                     self.send_message("Your username is saved", chat)
@@ -109,25 +110,31 @@ class SubscriberBot():
                 self.send_message("Send your data in such format\n Ticker Company name signal in first message\n photo in another", chat)
             elif tick[0] == "/tweet":
                 print(text)
-                if text != '' and len(tick)<2:
+                if text != '' and len(tick)<2 and len(text.split())==3:
                     temp_list = text.split()
                     df = pd.read_csv('sample_tweets.csv', sep = ';')
-                    while(True):
-                        n = randint(0,33)
-                        if temp_list[2] in df['text'][n]:
-                            string = df['text'][n]
-                            for s in string.split():
-                                if '$' in s:
-                                    string = string.replace(s,'$'+temp_list[0])
-                                if '/' in s:
-                                    string = string.replace(s,'')
-                            string = string+' '+temp_list[1]+' company'
+                    for index, row in df.iterrows():
+                        if temp_list[2] in row['text']:
+                            while(True):
+                                n = randint(0,33)
+                                if temp_list[2] in df['text'][n]:
+                                    string = df['text'][n]
+                                    for s in string.split():
+                                        if '$' in s:
+                                            string = string.replace(s,'$'+temp_list[0])
+                                        if '/' in s:
+                                            string = string.replace(s,'')
+                                    string = string+' '+temp_list[1]+' company'
+                                    break
+                            tick.append(string)
+                            old_message[str(name)] = tick
+                            with open("Old_message.json", "w") as f:
+                                json.dump(old_message,f)
+                            self.send_message("Now send photo as a file", chat)
                             break
-                    tick.append(string)
-                    old_message[str(name)] = tick
-                    with open("Old_message.json", "w") as f:
-                        json.dump(old_message,f)
-                    self.send_message("Now send photo as a file", chat)
+                        else:
+                            self.send_message("Try again", chat)
+                            break
                 elif len(tick)!=1 and text=='':
                     cnf = {
                         "consumer_key" : data[str(name)][0],
