@@ -43,17 +43,20 @@ class SubscriberBot():
     def handle_updates(self, updates):
         for update in updates["result"]:
             print(update["message"])
+            text = ""
             if 'text' in update["message"]:
                 text = update["message"]["text"]
             elif 'document' in update["message"]:
-                print(update['message']['document']['file_id'])
-                path = bot.getFile(update['message']['document']['file_id'])
-                print(path['file_path'])
-                url = path['file_path']
-                urlretrieve(url,os.path.abspath(str(update['message']['document']['file_name'])))
-                text = ""
+                if "image" in update['message']['document']['mime_type']:
+                    print(update['message']['document']['file_id'])
+                    path = bot.getFile(update['message']['document']['file_id'])
+                    print(path['file_path'])
+                    url = path['file_path']
+                    urlretrieve(url,os.path.abspath(str(update['message']['document']['file_name'])))
+                else:
+                    text = "error"
             else:
-                continue
+                text = "error"
             chat = update["message"]["chat"]["id"]
             name = update["message"]["chat"]["first_name"]
             list_keys = []

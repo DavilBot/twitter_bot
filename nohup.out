@@ -1,0 +1,21 @@
+{'message_id': 617, 'from': {'id': 416552809, 'is_bot': False, 'first_name': 'Beknur', 'last_name': 'Kattabekov', 'username': 'Beknur_K', 'language_code': 'en-US'}, 'chat': {'id': 416552809, 'first_name': 'Beknur', 'last_name': 'Kattabekov', 'username': 'Beknur_K', 'type': 'private'}, 'date': 1533203995, 'text': 'salam'}
+{'message_id': 619, 'from': {'id': 416552809, 'is_bot': False, 'first_name': 'Beknur', 'last_name': 'Kattabekov', 'username': 'Beknur_K', 'language_code': 'en-US'}, 'chat': {'id': 416552809, 'first_name': 'Beknur', 'last_name': 'Kattabekov', 'username': 'Beknur_K', 'type': 'private'}, 'date': 1533204067, 'text': '/save_me', 'entities': [{'offset': 0, 'length': 8, 'type': 'bot_command'}]}
+{'message_id': 621, 'from': {'id': 416552809, 'is_bot': False, 'first_name': 'Beknur', 'last_name': 'Kattabekov', 'username': 'Beknur_K', 'language_code': 'en-US'}, 'chat': {'id': 416552809, 'first_name': 'Beknur', 'last_name': 'Kattabekov', 'username': 'Beknur_K', 'type': 'private'}, 'date': 1533204086, 'text': '/tweet', 'entities': [{'offset': 0, 'length': 6, 'type': 'bot_command'}]}
+{'message_id': 623, 'from': {'id': 416552809, 'is_bot': False, 'first_name': 'Beknur', 'last_name': 'Kattabekov', 'username': 'Beknur_K', 'language_code': 'en-US'}, 'chat': {'id': 416552809, 'first_name': 'Beknur', 'last_name': 'Kattabekov', 'username': 'Beknur_K', 'type': 'private'}, 'date': 1533204099, 'text': 'FF HHH bullish'}
+FF HHH bullish
+{'message_id': 625, 'from': {'id': 416552809, 'is_bot': False, 'first_name': 'Beknur', 'last_name': 'Kattabekov', 'username': 'Beknur_K', 'language_code': 'en-US'}, 'chat': {'id': 416552809, 'first_name': 'Beknur', 'last_name': 'Kattabekov', 'username': 'Beknur_K', 'type': 'private'}, 'date': 1533204111, 'document': {'file_name': 'telegram-bot-lessons.pdf', 'mime_type': 'application/pdf', 'file_id': 'BQADAgADXgEAAp9EGEs1kho3XfewJQI', 'file_size': 2476379}}
+BQADAgADXgEAAp9EGEs1kho3XfewJQI
+https://api.telegram.org/file/bot686702879:AAFS1SlBKg3BVozmdgnVrmctK0-cwkBgykI/documents/file_33.pdf
+
+Traceback (most recent call last):
+  File "multiple_tweets.py", line 197, in <module>
+    obj.main()
+  File "multiple_tweets.py", line 191, in main
+    self.handle_updates(updates)
+  File "multiple_tweets.py", line 148, in handle_updates
+    status = api.update_with_media(image, status=tweet)
+  File "/home/beknur/anaconda3/lib/python3.6/site-packages/tweepy/api.py", line 219, in update_with_media
+    headers, post_data = API._pack_image(filename, 3072, form_field='media[]', f=f)
+  File "/home/beknur/anaconda3/lib/python3.6/site-packages/tweepy/api.py", line 1320, in _pack_image
+    raise TweepError('Invalid file type for image: %s' % file_type)
+tweepy.error.TweepError: Invalid file type for image: application/pdf
